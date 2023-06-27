@@ -1,0 +1,100 @@
+.App {
+    max-width: 50%;
+    margin: 0 auto;
+    padding: 20px 30px;
+    font-family: sans-serif;
+    margin-top: 100px;
+    background-color: white;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  h1 {
+    margin-top: 10px;
+    color: black;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500px;
+    color: #012970;
+  }
+  
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #4154f1;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #4154f1;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button[type="button"]:hover {
+    background-color: #3e8e41;
+  }
+
+  button[type="button"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+  
+  .curso {
+    background-color: #012970; 
+    color: white; 
+    padding: 10px; 
+    border: none;
+  }
+
+  .firmaxx {
+    height: 200px;
+    width: 100%;
+    max-width: 800px;
+    padding: 10px;
+    border: 1px solid #4154f1;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  .canvas-container {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .linea {
+    font-weight: bold;
+  }
+  
