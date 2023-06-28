@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../scss/layout/_Perfil.scss';
+import logo from '../images/logo.png';
 
 function Usuario() {
   const [formData, setFormData] = useState({
@@ -76,94 +77,96 @@ function Usuario() {
     <div className="container pagina">
       <div className="row">
         <div className="col-md-3 border-right">
-          <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-            <img className="rounded-circle mt-5" widt-h="150px" src="" alt="" />
-            <span className="font-weight-bold">nombre</span>
-            <span className="text-black-50">mail</span>
-            <span> </span>
+          <div className="d-flex flex-column align-items-center text-center p-3 py-0">
+            <img className="rounded-circle mt-5" width="100px" height="100px" src={logo} />
+            <span className="labels font-weight-bold">Nombre</span>
+            <span className="labels text-black-50">Mail</span>
           </div>
         </div>
 
-        <div className="col-md-5 border-right">
+        <div className="col-md-9">
           <div className="p-3 py-5">
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="userId">ID de Usuario:</label>
-              <input type="number" id="userId" value={userId || ''} onChange={handleUserIdChange} />
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h4 className="text-right">Perfil</h4>
-              </div>
-              <div className="row mt-2">
-              <div className="col-md-12">
-                  <label className="labels" style={{ fontSize: '14px' }}>Nombre</label>
-                  <input
-                    type="text"
-                    name="nombre"
-                    placeholder="Nombre"
-                    value={formData.nombre}
-                    onChange={handleInputChange}
-                    required
-                  />
+            <div className="container-inner">
+              <form onSubmit={handleSubmit}>
+                <div className="row">
+                  <div className="col-md-12">
+                    <label className="labels">Nombre</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="nombre"
+                      placeholder="Nombre"
+                      value={formData.nombre}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-12">
+                    <label className="labels">Apellido</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="apellido"
+                      placeholder="Apellido"
+                      value={formData.apellido}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-12">
+                    <label className="labels">Edad</label>
+                    <input
+                      className="form-control"
+                      type="number"
+                      name="edad"
+                      placeholder="Edad"
+                      value={formData.edad}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-12">
+                    <label className="labels">Direccion</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="direccion"
+                      placeholder="Dirección"
+                      value={formData.direccion}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-12">
+                    <label className="labels">Año</label>
+                    <input
+                      className="form-control"
+                      type="number"
+                      name="ano"
+                      placeholder="Año"
+                      value={formData.ano}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-12">
+                    <label className="labels">Curso</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="curso"
+                      placeholder="Curso"
+                      value={formData.curso}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
                 </div>
-                <div className="col-md-12">
-                  <label className="labels" style={{ fontSize: '14px' }}>Apellido</label>
-                  <input
-                    type="text"
-                    name="apellido"
-                    placeholder="Apellido"
-                    value={formData.apellido}
-                    onChange={handleInputChange}
-                    required
-                  />
+                <div className="mt-5 text-center">
+                  <button type="submit" className="btn btn-primary profile-button">Guardar Cambios</button>
                 </div>
-                <div className="col-md-12">
-                  <label className="labels" style={{ fontSize: '14px' }}>Edad</label>
-                  <input
-                    type="number"
-                    name="edad"
-                    placeholder="Edad"
-                    value={formData.edad}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="col-md-12">
-                  <label className="labels" style={{ fontSize: '14px' }}>Direccion</label>
-                  <input
-                    type="text"
-                    name="direccion"
-                    placeholder="Dirección"
-                    value={formData.direccion}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="col-md-12">
-                  <label className="labels" style={{ fontSize: '14px' }}>Año</label>
-                  <input
-                    type="number"
-                    name="ano"
-                    placeholder="Año"
-                    value={formData.ano}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="col-md-12">
-                  <label className="labels" style={{ fontSize: '14px' }}>Curso</label>
-                  <input
-                    type="text"
-                    name="curso"
-                    placeholder="Curso"
-                    value={formData.curso}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="mt-5 text-center">
-                <button type="submit" className="btn btn-primary profile-button">Guardar Cambios</button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -172,5 +175,3 @@ function Usuario() {
 }
 
 export default Usuario;
-
-
