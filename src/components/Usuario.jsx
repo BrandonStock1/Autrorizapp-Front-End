@@ -74,7 +74,7 @@ function Usuario() {
   };
 
   return (
-    <div className="container pagina">
+    <div className="bloque pagina">
       <div className='line line-left'></div>
       <div className='line line-right'></div>
       <div className="row">

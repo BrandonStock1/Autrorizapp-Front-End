@@ -1,12 +1,28 @@
 .pagina {
-  background-color: blue;
+  background-color: #030760;
 }
 
-.container {
+.bloque {
   max-width: 1000px;
   margin: 50px auto;
   background-color: white;
   padding: 20px;
+}
+
+.line {
+  position: absolute;
+  bottom: 50%;
+  width: 50%;
+  height: 1px;
+  background-color: #fff;
+}
+
+.line-left {
+  left: 0;
+}
+
+.line-right {
+  right: 0;
 }
 
 .row {

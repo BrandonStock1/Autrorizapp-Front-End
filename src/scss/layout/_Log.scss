@@ -1,10 +1,29 @@
 body {
+  margin: 0;
   font-family: "Open Sans", sans-serif;
+  background-color: #030760;
 }
 
-.cascading-right {
-  background: hsla(0, 0%, 100%, 0.55);
-  backdrop-filter: blur(30px);
+.Cont {
+  background-color: #030760;
+  position: relative;
+
+}
+
+.line {
+  position: absolute;
+  bottom: 50%;
+  width: 50%;
+  height: 1px;
+  background-color: #fff;
+}
+
+.line-left {
+  left: 0;
+}
+
+.line-right {
+  right: 0;
 }
 
 .border-bottom {
@@ -41,16 +60,6 @@ body {
 
 .justify-content-between {
   justify-content: space-between !important;
-}
-
-#form3,
-#form4 {
-  border-radius: 0 !important;
-  border: 2px solid #030760 !important;
-  background-color: #030760 !important;
-  padding: 0.5rem 0.75rem !important;
-  color: #fff;
-  z-index: 1;
 }
 
 .image-container {
