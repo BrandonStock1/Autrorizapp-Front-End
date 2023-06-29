@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../scss/layout/_Perfil.scss';
-import logo from '../images/logo.png';
 import monta from '../images/monta.png';
 
 function Usuario() {
@@ -81,7 +80,7 @@ function Usuario() {
       <div className="row">
         <div className="col-md-3 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-4">
-            <center><img className="rounded-circle mt-4" width="130px" height="130px" src={monta} /></center>
+            <center><img className="rounded-circle mt-4" width="130px" height="130px" src={monta} alt="FOTO" /></center>
           </div>
         </div>
 
