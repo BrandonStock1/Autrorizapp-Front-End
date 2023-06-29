@@ -6,15 +6,15 @@
   max-width: 1000px;
   margin: 50px auto;
   background-color: white;
-  padding: 20px;
 }
 
 .line {
   position: absolute;
-  bottom: 50%;
+  bottom: 75%;
   width: 50%;
   height: 1px;
   background-color: #fff;
+  z-index: -3;
 }
 
 .line-left {
@@ -54,22 +54,28 @@
   text-align: center;
 }
 
-.logo img {
-  width: 100px;
-  height: 100px;
+.Logo {
+  width: 80px;
+  height: 80px;
+  text-align: center;
 }
 
 .col-md-12 {
   flex-basis: 100%;
 }
 
+.rounded-circle {
+  margin: 20px auto;
+}
+
 .labels {
   font-weight: bold;
+  margin-top: 10px;
 }
 
 .form-control {
     width: 100%;
-    padding: 10px;
+    padding: 0px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
