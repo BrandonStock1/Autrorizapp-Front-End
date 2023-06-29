@@ -75,6 +75,8 @@ function Usuario() {
 
   return (
     <div className="container pagina">
+      <div className='line line-left'></div>
+      <div className='line line-right'></div>
       <div className="row">
         <div className="col-md-3 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-0">
