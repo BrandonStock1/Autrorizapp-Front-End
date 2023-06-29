@@ -54,9 +54,9 @@ function App() {
                         </MDBTabs>
                         <MDBInput wrapperClass='mb-3' id='form3' type='email' placeholder='Username' style={{ borderRadius: '0', borderColor: '#030760', height: '40px', fontSize: '1rem' }} />
                         <MDBInput wrapperClass='mb-3' id='form4' type='password' placeholder='Contraseña' style={{ borderRadius: '0', borderColor: '#030760', height: '40px', fontSize: '1rem' }} />
-                        <MDBBtn className='w-100 mb-3' size='sm' style={{ backgroundColor: '#030760',borderRadius: '0', fontSize: '1rem',  borderColor: '#030760', height: '40px' }}>   Iniciar sesión</MDBBtn>
-                        <div className="text-center" style={{ marginBottom: '10px' }}>
-                          <p className="text-center fw-bold mb-0" style={{ display: 'inline-block' }}>OR</p>
+                        <MDBBtn className='w-100 mb-2' size='sm' style={{ backgroundColor: '#030760',borderRadius: '0', fontSize: '1rem',  borderColor: '#030760', height: '40px' }}>   Iniciar sesión</MDBBtn>
+                        <div className="text-center">
+                          <p className="text-center fw-bold mb-2" style={{ fontSize: '1rem' }}>OR </p>
                         </div>
                         <MDBBtn className="mb-3 w-100" size="sm" style={{ backgroundColor: '#030760', borderRadius: '0', fontSize: '1rem', borderColor: '#030760', height: '40px' }}>   Log in with Google</MDBBtn>
                       </form>
