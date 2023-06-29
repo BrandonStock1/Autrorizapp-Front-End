@@ -6,8 +6,6 @@ body {
 
 .Cont {
   background-color: #030760;
-  position: relative;
-
 }
 
 .line {
@@ -37,6 +35,7 @@ body {
 .mb-4 {
   margin-bottom: 1rem !important;
 }
+
 
 .w-100 {
   width: 100% !important;
@@ -71,4 +70,13 @@ body {
   object-fit: cover;
   height: 100%;
   width: auto;
+}
+
+#form3,
+#form4 {
+  border-radius: 0 !important;
+  background-color: #fff !important;
+  padding: 0.5rem 0.75rem !important;
+  color: #fff;
+  z-index: 1;
 }
