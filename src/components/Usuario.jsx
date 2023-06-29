@@ -75,8 +75,8 @@ function Usuario() {
 
   return (
     <div className="bloque pagina">
-      <div className='line line-left'></div>
-      <div className='line line-right'></div>
+      <div className='llline llline-left'></div>
+      <div className='llline llline-right'></div>
       <div className="row">
         <div className="col-md-3 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-4">
