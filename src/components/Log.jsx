@@ -8,7 +8,6 @@ import {
   MDBCard,
   MDBCardBody,
   MDBInput,
-  MDBIcon,
   MDBRow,
   MDBCol,
   MDBTabs,
@@ -29,9 +28,9 @@ function App() {
 
   return (
       <div className="Cont fluid my-5 px-0">
+        <div className='line line-left'></div>
+        <div className='line line-right'></div>
           <MDBContainer style={{ maxWidth: '1000px', padding: '0 63px' }}>
-          <div className='line line-left'></div>
-          <div className='line line-right'></div>
             <MDBRow className='g-0 align-items-stretch justify-content-center'>
               <MDBCol lg='6'>
                 <MDBCard className='my-5 cascading-right border-0' style={{ borderRadius: '0', height: '90vh' }}>
