@@ -42,12 +42,12 @@ function App() {
                       <form>
                         <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between border-bottom' style={{ backgroundColor: '#030760', borderRadius: '50rem', padding: '5px' }}>
                           <MDBTabsItem>
-                            <MDBTabsLink onClick={() => handleJustifyClick('tab1')} active={justifyActive === 'tab1'} style={{ color: justifyActive === 'tab1' ? '#000' : '#fff', backgroundColor: justifyActive === 'tab1' ? '#fff' : 'transparent', borderRadius: '50rem', padding: '5px' }}>
+                            <MDBTabsLink onClick={() => handleJustifyClick('tab1')} active={justifyActive === 'tab1'} style={{ color: justifyActive === 'tab1' ? '#030760' : '#fff', backgroundColor: justifyActive === 'tab1' ? '#fff' : 'transparent', borderRadius: '50rem', padding: '5px', fontWeight: '500' }}>
                               Asistente
                             </MDBTabsLink>
                           </MDBTabsItem>
                           <MDBTabsItem>
-                            <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'} style={{ color: justifyActive === 'tab2' ? '#000' : '#fff', backgroundColor: justifyActive === 'tab2' ? '#fff' : 'transparent', borderRadius: '50rem', padding: '5px' }}>
+                            <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'} style={{ color: justifyActive === 'tab2' ? '#030760' : '#fff', backgroundColor: justifyActive === 'tab2' ? '#fff' : 'transparent', borderRadius: '50rem', padding: '5px', fontWeight: '500' }}>
                               Padre
                             </MDBTabsLink>
                           </MDBTabsItem>
