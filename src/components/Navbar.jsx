@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsBellFill, BsPersonFill } from '../react-icons/bs';
+import { FaBars } from '../react-icons/fa';
 import '../scss/layout/_Navbar.scss';
 import logo from '../images/logo.png';
 
 const Navbar = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleSidebarToggle = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <header id="header" className="header fixed-top d-flex align-items-center">
       <div className="d-flex align-items-center justify-content-between">
-        <Link className="logo d-flex align-items-center" to="/">
+        <Link className="logo d-flex align-items-center" to="../paginas/Home.jsx">
           <img src={logo} alt="Logo" className="logo-img" />
           <span className="d-none d-lg-block logo-text">RT</span>
         </Link>
-        <BsBellFill className="bi bi-list toggle-sidebar-btn" />
       </div>
+
+      <FaBars className="nav-link" data-widget="pushmenu" href="#" role="button" onClick={handleSidebarToggle} />
 
       <nav className="header-nav ms-auto">
         <ul className="d-flex align-items-center">
@@ -24,50 +32,7 @@ const Navbar = () => {
             </a>
 
             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-              <li className="dropdown-header">
-                You have 4 new notifications
-                <span className="badge rounded-pill bg-primary p-2 ms-2">View all</span>
-              </li>
-
-              <li className="notification-item">
-                <BsBellFill className="text-warning" />
-                <div>
-                  <h4>Lorem Ipsum</h4>
-                  <p>Quae dolorem earum veritatis oditseno</p>
-                  <p>30 min. ago</p>
-                </div>
-              </li>
-
-              <li className="notification-item">
-                <BsBellFill className="text-danger" />
-                <div>
-                  <h4>Atque rerum nesciunt</h4>
-                  <p>Quae dolorem earum veritatis oditseno</p>
-                  <p>1 hr. ago</p>
-                </div>
-              </li>
-
-              <li className="notification-item">
-                <BsBellFill className="text-success" />
-                <div>
-                  <h4>Sit rerum fuga</h4>
-                  <p>Quae dolorem earum veritatis oditseno</p>
-                  <p>2 hrs. ago</p>
-                </div>
-              </li>
-
-              <li className="notification-item">
-                <BsBellFill className="text-primary" />
-                <div>
-                  <h4>Dicta reprehenderit</h4>
-                  <p>Quae dolorem earum veritatis oditseno</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </li>
-
-              <li className="dropdown-footer">
-                <a>Show all notifications</a>
-              </li>
+              {/* Contenido de las notificaciones */}
             </ul>
           </li>
 
@@ -84,9 +49,9 @@ const Navbar = () => {
               </li>
 
               <li>
-              <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="../paginas/Perfil.jsx">
                   <i className="bi bi-person-circle"></i> Perfil personal
-                </a>
+                </Link>
               </li>
 
               <li>
@@ -109,4 +74,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-                

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Importa el componente Link de react-router-dom
 import '../scss/layout/_Log.scss';
 import monta from '../images/monta.png';
 import logo from '../images/logo.png';
@@ -67,6 +68,7 @@ function App() {
                     </div>
                     <MDBBtn className="mb-3 w-100" size="sm" style={{ backgroundColor: '#030760', borderRadius: '0', fontSize: '1rem', borderColor: '#030760', height: '40px' }}>Log in with Google</MDBBtn>
                   </form>
+                  <Link to="../paginas/Home.jsx">Ir a la página de inicio</Link> {/* Enlace hacia la página de inicio */}
                 </div>
               </MDBCardBody>
             </MDBCard>

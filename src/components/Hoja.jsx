@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import '../scss/layout/_Hoja.scss';
 import '../scss/layout/_Navbar.scss';
+import '../App.css';
 
 function Hoja() {
   const [alumno, setAlumno] = useState("");
@@ -8,7 +10,6 @@ function Hoja() {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [aclaracion, setAclaracion] = useState("");
-  const [firma] = useState("");
   const signatureRef = useRef(null);
   const canvasContainerRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -44,7 +45,7 @@ function Hoja() {
   const handleHoraChange = (event) => {
     setHora(event.target.value);
   };
-  
+
   const handleAclaracionChange = (event) => {
     setAclaracion(event.target.value);
   };
@@ -72,17 +73,37 @@ function Hoja() {
     setIsDrawing(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!firma) {
+    if (!signatureRef.current.toDataURL()) {
       alert("Por favor, agregue una firma");
       return;
     }
-    console.log(`Autorizo a mi hijo/a, ${alumno}, del curso ${curso} a salir del colegio el día ${fecha} a las ${hora}`);
-    console.log(`Firma: ${firma}`);
-    // Aquí puedes agregar la lógica para enviar la autorización
-  };
 
+    // Convertir el contenido del canvas a una URL de imagen en formato Base64
+    const canvas = signatureRef.current;
+    const dataURL = canvas.toDataURL();
+
+    // Crear el objeto con los datos del formulario y la firma en formato Base64
+    const data = {
+      alumno: alumno,
+      curso: curso,
+      fecha: fecha,
+      hora: hora,
+      aclaracion: aclaracion,
+      firma: dataURL, // Enviar la firma en formato Base64
+    };
+
+    try {
+      // Enviar los datos al servidor
+      const response = await axios.post('http://localhost:3001/api/salida', data);
+      console.log(response.data);
+      // Aquí puedes realizar alguna acción después de guardar los datos, como mostrar un mensaje de éxito.
+    } catch (error) {
+      console.error('Error al enviar los datos al servidor: ' + error);
+      // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje de error al usuario.
+    }
+  };
 
   return (
     <div className="App">
@@ -132,7 +153,7 @@ function Hoja() {
           Aclaración:
           <input type="text" name="name" value={aclaracion} onChange={handleAclaracionChange} required />
         </label>
-        
+
         <br />
         <br />
 
@@ -146,8 +167,7 @@ function Hoja() {
 
       </form>
     </div>
-
-);
+  );
 }
 
-export default Hoja
+export default Hoja;
