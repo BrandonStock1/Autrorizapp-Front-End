@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 import '../scss/layout/_Hoja.scss';
 import '../scss/layout/_Navbar.scss';
-import '../App.css';
 
 function Hoja() {
   const [alumno, setAlumno] = useState("");
@@ -94,16 +92,7 @@ function Hoja() {
       firma: dataURL, // Enviar la firma en formato Base64
     };
 
-    try {
-      // Enviar los datos al servidor
-      const response = await axios.post('http://localhost:3001/api/salida', data);
-      console.log(response.data);
-      // Aquí puedes realizar alguna acción después de guardar los datos, como mostrar un mensaje de éxito.
-    } catch (error) {
-      console.error('Error al enviar los datos al servidor: ' + error);
-      // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje de error al usuario.
-    }
-  };
+ };
 
   return (
     <div className="App">
