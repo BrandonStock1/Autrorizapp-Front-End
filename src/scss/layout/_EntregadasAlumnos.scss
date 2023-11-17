@@ -1,0 +1,62 @@
+/* src/App.css */
+body {
+  margin: 0;
+  padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    
+  }
+  
+  .container2 {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    max-width: 50%;
+    margin: 0 auto;
+    padding: 20px 30px;
+    font-family: sans-serif;
+    margin-top: 100px;
+  }
+  
+  h1 {
+    color: #333;
+    text-align: center;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .li2 {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  li:hover {
+    transform: scale(1.02);
+  }
+  
+  p {
+    margin: 0;
+  }
+  
+  .img2 {
+    border: 1px solid #ccc;
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    
+  }
+
+
+  

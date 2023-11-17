@@ -1,0 +1,58 @@
+.page {
+  background-color: #030760;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.bloque {
+  max-width: 1000px;
+  margin: 50px auto;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.col-md-3 {
+  flex-basis: 25%;
+  padding: 10px;
+}
+
+.border-right {
+  border-right: 1px solid #ccc;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.labels {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.btn-primary {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+

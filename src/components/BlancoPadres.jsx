@@ -4,13 +4,11 @@ import '../scss/layout/_Hoja.scss';
 
 function Hoja() {
   const [alumno, setAlumno] = useState("");
-  const [curso, setCurso] = useState("");
-  const [fecha, setFecha] = useState("");
-  const [hora, setHora] = useState("");
   const [aclaracion, setAclaracion] = useState("");
   const signatureRef = useRef(null);
   const canvasContainerRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [textosAutorizacion, setTextosAutorizacion] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -28,20 +26,21 @@ function Hoja() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/api/autorizaciones');
+        setTextosAutorizacion(response.data);
+      } catch (error) {
+        console.error('Error al obtener los datos del servidor: ' + error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleAlumnoChange = (event) => {
     setAlumno(event.target.value);
-  };
-
-  const handleCursoChange = (event) => {
-    setCurso(event.target.value);
-  };
-
-  const handleFechaChange = (event) => {
-    setFecha(event.target.value);
-  };
-
-  const handleHoraChange = (event) => {
-    setHora(event.target.value);
   };
 
   const handleAclaracionChange = (event) => {
@@ -78,58 +77,32 @@ function Hoja() {
       return;
     }
 
-    // Convertir el contenido del canvas a una URL de imagen en formato Base64
     const canvas = signatureRef.current;
     const dataURL = canvas.toDataURL();
 
-    // Crear el objeto con los datos del formulario y la firma en formato Base64
     const data = {
       alumno: alumno,
-      curso: curso,
-      fecha: fecha,
-      hora: hora,
       aclaracion: aclaracion,
-      firma: dataURL, // Enviar la firma en formato Base64
+      firma: dataURL,
     };
 
-    try {
-      // Enviar los datos al servidor
-      const response = await axios.post('http://localhost:3001/api/salida', data);
-      console.log(response.data);
-      // Aquí puedes realizar alguna acción después de guardar los datos, como mostrar un mensaje de éxito.
-    } catch (error) {
-      console.error('Error al enviar los datos al servidor: ' + error);
-      // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje de error al usuario.
-    }
+    setAlumno("");
+    setAclaracion("");
   };
 
   return (
     <div className="App">
       <h1>Autorización Escolar Digital</h1>
       <form onSubmit={handleSubmit}>
+      <div>
+        
+        {textosAutorizacion.map((texto, index) => (
+          <p key={index}>{texto.texto_autorizacion}</p>
+        ))}
+      </div>
         <label>
           Nombre del alumno:
           <input name="name" type="text" value={alumno} onChange={handleAlumnoChange} required />
-        </label>
-        <label>
-          Curso:
-          <select name="curso" value={curso} onChange={handleCursoChange} required>
-            <option value="">Seleccione el curso</option>
-            <option value="1">1° año</option>
-            <option value="2">2° año</option>
-            <option value="3">3° año</option>
-            <option value="4">4° año</option>
-            <option value="5">5° año</option>
-            <option value="6">6° año</option>
-          </select>
-        </label>
-        <label>
-          Fecha:
-          <input type="date" name="fecha" value={fecha} onChange={handleFechaChange} required />
-        </label>
-        <label>
-          Hora:
-          <input type="time" name="hora" value={hora} onChange={handleHoraChange} required />
         </label>
         <label>
           Firma:
@@ -155,18 +128,12 @@ function Hoja() {
         <br />
         <br />
 
-        <label>
-          Autorizo a mi hijo/a, {alumno}, del curso {curso} a salir del colegio el día {fecha} a las {hora}
-        </label>
-
-        <br />
-
         <button type="submit">Enviar</button>
 
       </form>
+
     </div>
   );
 }
 
 export default Hoja;
-

@@ -25,29 +25,23 @@ export const signInWithEmail = (email, password) => {
     .then((userCredential) => {
       // Inicio de sesión exitoso
       const user = userCredential.user;
-      const email = user.email;
-      if (email.endsWith("@est.ort.edu.ar")) {
-        // Si el correo electrónico tiene el dominio correcto
-        const name = user.displayName;
-        const profilePic = user.photoURL;
-        localStorage.setItem("name", name);
-        localStorage.setItem("email", email);
-        localStorage.setItem("profilePic", profilePic);
+      const name = user.displayName;
+      const profilePic = user.photoURL;
+      
+      localStorage.setItem("name", name);
+      localStorage.setItem("email", email);
+      localStorage.setItem("profilePic", profilePic);
 
-        alert("Log in exitoso");
-        window.location.reload();
+      alert("Log in exitoso");
+      
+      if (email.endsWith("@ort.edu.ar")) {
+        // Redirige al usuario a la página HomeAsistente
+        window.location.href = "../HomeAsistentes";
       } else {
-        // Si el correo electrónico no tiene el dominio correcto, eliminar la cuenta de usuario recién creada
-        user.delete()
-          .then(() => {
-            console.log("Usuario eliminado");
-          })
-          .catch((error) => {
-            console.log("Error al eliminar usuario:", error);
-          });
-
-        // Mostrar un mensaje de error
-        alert("No estas autorizado a ingresar a esta aplicación");
+        // Redirige al usuario a la página Home normal
+        window.location.href = "../Home";
+      }
+       {
       }
     })
     .catch((error) => {
@@ -93,3 +87,17 @@ export async function sendEmail() {
     alert("No hay ningun usuario autenticado");
   }
 }
+// Función para registrar un nuevo usuario
+export const registerUser = (email, password) => {
+  auth.createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Usuario registrado exitosamente
+      const user = userCredential.user;
+      console.log('Usuario registrado:', user);
+      alert('Usuario registrado exitosamente');
+    })
+    .catch((error) => {
+      console.error('Error al registrar usuario:', error.message);
+      alert('Error al registrar usuario: ' + error.message);
+    });
+};

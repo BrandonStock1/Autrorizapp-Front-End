@@ -1,0 +1,65 @@
+/* Estilos generales */
+.container {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.page-title {
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+.form-container {
+  margin: 20px 0;
+}
+
+/* Estilos del formulario de búsqueda */
+.label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.select-box {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.search-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Estilos de la sección de información del alumno */
+.student-info {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.info-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.info-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+}
+
+.signature-image {
+  max-width: 100%;
+  max-height: 200px;
+}
+
+.no-records {
+  font-size: 18px;
+  margin-top: 10px;
+}

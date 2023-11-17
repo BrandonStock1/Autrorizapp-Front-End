@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <header id="header" className="header fixed-top d-flex align-items-center">
       <div className="d-flex align-items-center justify-content-between">
-        <Link className="logo d-flex align-items-center" to="../paginas/Home.jsx">
+        <Link className="logo d-flex align-items-center" to="/Home">
           <img src={logo} alt="Logo" className="logo-img" />
           <span className="d-none d-lg-block logo-text">RT</span>
         </Link>
@@ -24,44 +24,38 @@ const Navbar = () => {
       <FaBars className="nav-link" data-widget="pushmenu" href="#" role="button" onClick={handleSidebarToggle} />
 
       <nav className="header-nav ms-auto">
-        <ul className="d-flex align-items-center">
-          <li className="nav-item dropdown">
-            <a className="nav-link nav-icon" data-bs-toggle="dropdown">
-              <BsBellFill />
-              <span className="badge bg-primary badge-number">4</span>
-            </a>
-
-            <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-              {/* Contenido de las notificaciones */}
-            </ul>
-          </li>
-
+        <ul className="d-flex align-items-center">      
+        
           <li className="nav-item dropdown pe-3">
             <a className="nav-link nav-profile d-flex align-items-center pe-0" data-bs-toggle="dropdown">
               <BsPersonFill />
-              <span className="d-none d-md-block dropdown-toggle ps-2">Brandon!</span>
+              <span className="d-none d-md-block dropdown-toggle ps-2">{
+                  localStorage.getItem("email")
+              }</span>
             </a>
 
             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li className="dropdown-header">
-                <h6>Brandon!</h6>
+                <h6>{
+                  localStorage.getItem("email")
+              }</h6>
                 <span>Alumno</span>
               </li>
 
               <li>
-                <Link className="dropdown-item" to="../paginas/Perfil.jsx">
+                <Link className="dropdown-item" to="/Perfil">
+                  <i className="bi bi-person-circle"></i> Perfil Alumno
+                </Link>
+              </li>
+
+              <li>
+                <Link className="dropdown-item" to="/a">
                   <i className="bi bi-person-circle"></i> Perfil personal
                 </Link>
               </li>
 
               <li>
-                <a className="dropdown-item" href="#">
-                  <i className="bi bi-gear"></i> Perfil del alumno
-                </a>
-              </li>
-
-              <li>
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" href="./">
                   <i className="bi bi-box-arrow-left"></i> Cerrar sesión
                 </a>
               </li>
