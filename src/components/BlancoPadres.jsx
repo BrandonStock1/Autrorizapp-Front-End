@@ -1,30 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../scss/layout/_Hoja.scss';
 
 function Hoja() {
-  const [alumno, setAlumno] = useState("");
-  const [aclaracion, setAclaracion] = useState("");
-  const signatureRef = useRef(null);
-  const canvasContainerRef = useRef(null);
-  const [isDrawing, setIsDrawing] = useState(false);
   const [textosAutorizacion, setTextosAutorizacion] = useState([]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (canvasContainerRef.current) {
-        const canvasContainerWidth = canvasContainerRef.current.offsetWidth;
-        const canvasContainerHeight = canvasContainerWidth * 0.5; // Ajusta la proporción aquí
-        const canvas = signatureRef.current;
-        canvas.width = canvasContainerWidth;
-        canvas.height = canvasContainerHeight;
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [lastX, setLastX] = useState(0);
+  const [lastY, setLastY] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,99 +21,86 @@ function Hoja() {
     fetchData();
   }, []);
 
-  const handleAlumnoChange = (event) => {
-    setAlumno(event.target.value);
+  const handleFormSubmit = async (event, textoId) => {
+    event.preventDefault();
+    const alumnoName = event.target[`name_${textoId}`].value;
+    const aclaracionText = event.target[`aclaracion_${textoId}`].value;
+    const canvas = document.getElementById(`signatureCanvas_${textoId}`);
+    const dataURL = canvas.toDataURL();
+  
+    try {
+      const response = await axios.put(`http://localhost:3001/actualizarDatos/${textoId}`, {
+        alumno: alumnoName,
+        firma: dataURL,
+        aclaracion: aclaracionText
+      });
+  
+      console.log(response.data); // Mensaje de éxito desde el servidor
+  
+      // No borrar los campos después del envío
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+    }
   };
-
-  const handleAclaracionChange = (event) => {
-    setAclaracion(event.target.value);
-  };
-
-  const handleCanvasMouseDown = () => {
+  
+  const handleCanvasMouseDown = (event) => {
     setIsDrawing(true);
+    setLastX(event.nativeEvent.offsetX);
+    setLastY(event.nativeEvent.offsetY);
   };
 
   const handleCanvasMouseMove = (event) => {
     if (!isDrawing) return;
-    const canvas = signatureRef.current;
+    const canvas = event.target;
     const ctx = canvas.getContext('2d');
-    const rect = canvas.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    ctx.lineTo(x, y);
+
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
     ctx.stroke();
+    setLastX(event.nativeEvent.offsetX);
+    setLastY(event.nativeEvent.offsetY);
   };
 
   const handleCanvasMouseUp = () => {
     setIsDrawing(false);
   };
 
-  const handleCanvasMouseLeave = () => {
-    setIsDrawing(false);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!signatureRef.current.toDataURL()) {
-      alert("Por favor, agregue una firma");
-      return;
-    }
-
-    const canvas = signatureRef.current;
-    const dataURL = canvas.toDataURL();
-
-    const data = {
-      alumno: alumno,
-      aclaracion: aclaracion,
-      firma: dataURL,
-    };
-
-    setAlumno("");
-    setAclaracion("");
-  };
-
   return (
     <div className="App">
       <h1>Autorización Escolar Digital</h1>
-      <form onSubmit={handleSubmit}>
-      <div>
-        
-        {textosAutorizacion.map((texto, index) => (
-          <p key={index}>{texto.texto_autorizacion}</p>
-        ))}
-      </div>
-        <label>
-          Nombre del alumno:
-          <input name="name" type="text" value={alumno} onChange={handleAlumnoChange} required />
-        </label>
-        <label>
-          Firma:
-          <div
-            className="firmaxx"
-            ref={canvasContainerRef}
-            onMouseDown={handleCanvasMouseDown}
-            onMouseMove={handleCanvasMouseMove}
-            onMouseUp={handleCanvasMouseUp}
-            onMouseLeave={handleCanvasMouseLeave}
-          >
-            <canvas
-              ref={signatureRef}
-            />
-          </div>
-        </label>
-
-        <label>
-          Aclaración:
-          <input type="text" name="name" value={aclaracion} onChange={handleAclaracionChange} required />
-        </label>
-
-        <br />
-        <br />
-
-        <button type="submit">Enviar</button>
-
-      </form>
-
+      {textosAutorizacion.map((texto) => (
+        <div key={texto.id} style={{ border: '1px solid black', padding: '10px', marginBottom: '20px' }}>
+          <h3 style={{ border: '1px solid black', padding: '8px', borderRadius: '3px' }}>{texto.texto_autorizacion}</h3>
+          <form onSubmit={(event) => handleFormSubmit(event, texto.id)}>
+            <label>
+              Nombre del alumno:
+              <input name={`name_${texto.id}`} type="text" required />
+            </label>
+            <label>
+              Firma:
+              <div className="firmaxx">
+                <canvas
+                  id={`signatureCanvas_${texto.id}`}
+                  width="510"
+                  height="180"
+                  style={{ border: 'none', background: 'white' }}
+                  onMouseDown={handleCanvasMouseDown}
+                  onMouseMove={handleCanvasMouseMove}
+                  onMouseUp={handleCanvasMouseUp}
+                ></canvas>
+              </div>
+            </label>
+            <label>
+              Aclaración:
+              <input name={`aclaracion_${texto.id}`} type="text" required />
+            </label>
+            <br />
+            <br />
+            <button type="submit">Enviar</button>
+          </form>
+        </div>
+      ))}
     </div>
   );
 }

@@ -49,12 +49,6 @@ const Navbar = () => {
               </li>
 
               <li>
-                <Link className="dropdown-item" to="/a">
-                  <i className="bi bi-person-circle"></i> Perfil personal
-                </Link>
-              </li>
-
-              <li>
                 <a className="dropdown-item" href="./">
                   <i className="bi bi-box-arrow-left"></i> Cerrar sesión
                 </a>

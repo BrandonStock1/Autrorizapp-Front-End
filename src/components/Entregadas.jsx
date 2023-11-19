@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../scss/layout/_Entregadas.scss';
 
 function Entregadas() {
   const [alumnos, setAlumnos] = useState([]);
   const [selectedAlumno, setSelectedAlumno] = useState("");
-  const [alumnoData, setAlumnoData] = useState([]);
+  const [alumnoData, setAlumnoData] = useState({ vacias: [], salida: [] });
 
   useEffect(() => {
     fetchAlumnos();
@@ -29,81 +28,22 @@ function Entregadas() {
     }
 
     try {
-      const response = await axios.get(`http://localhost:3001/api/salida/alumno/${selectedAlumno}`);
-      const data = response.data;
-      setAlumnoData(data);
+      const responseVacias = await axios.get(`http://localhost:3001/api/autorizaciones-vacias/alumno/${selectedAlumno}`);
+      const responseSalida = await axios.get(`http://localhost:3001/api/salida/alumno/${selectedAlumno}`);
+
+      setAlumnoData({ vacias: responseVacias.data, salida: responseSalida.data });
     } catch (error) {
       console.error('Error al buscar los datos en el servidor: ' + error);
     }
   };
 
-  const styles = {
-    container: {
-      textAlign: 'center',
-      fontFamily: 'Arial, sans-serif',
-    },
-    pageTitle: {
-      fontSize: '24px',
-      margin: '20px 0',
-    },
-    formContainer: {
-      margin: '20px 0',
-    },
-    label: {
-      display: 'block',
-      fontSize: '18px',
-      marginBottom: '10px',
-    },
-    selectBox: {
-      width: '100%',
-      padding: '10px',
-      fontSize: '16px',
-    },
-    searchButton: {
-      marginTop: '10px',
-      padding: '10px 20px',
-      backgroundColor: '#007bff',
-      color: '#fff',
-      border: 'none',
-      fontSize: '16px',
-      cursor: 'pointer',
-    },
-    studentInfo: {
-      fontSize: '20px',
-      marginTop: '20px',
-    },
-    infoList: {
-      listStyleType: 'none',
-      padding: 0,
-    },
-    infoItem: {
-      border: '1px solid #ccc',
-      padding: '10px',
-      margin: '10px 0',
-      backgroundColor: '#f9f9f9',
-    },
-    signatureImage: {
-      maxWidth: '100%',
-      maxHeight: '200px',
-    },
-    noRecords: {
-      fontSize: '18px',
-      marginTop: '10px',
-    },
-    divider: {
-      borderTop: '1px solid #ccc',
-      margin: '20px 0',
-    },
-  };
-
   return (
-    <div style={styles.container} className="App">
-      <h1 style={styles.pageTitle}>Autorizaciones de salida</h1>
-      <form style={styles.formContainer} onSubmit={handleSearchByAlumno}>
-        <label style={styles.label}>
+    <div className="App">
+      <h1>Autorizaciones</h1>
+      <form onSubmit={handleSearchByAlumno}>
+        <label>
           Seleccionar alumno:
           <select
-            style={styles.selectBox}
             value={selectedAlumno}
             onChange={(e) => setSelectedAlumno(e.target.value)}
             required
@@ -114,34 +54,51 @@ function Entregadas() {
             ))}
           </select>
         </label>
-        <button style={styles.searchButton} type="submit">Buscar</button>
+        <button type="submit">Buscar</button>
       </form>
-      <div style={styles.divider}></div>
+
       <div>
-        <h2 style={styles.studentInfo}>Información del Alumno</h2>
-        {alumnoData.length > 0 ? (
-          <ul style={styles.infoList}>
-            {alumnoData.map((entry, index) => (
-              <li key={index} style={styles.infoItem}>
-                Alumno: {entry.alumno}<br />
-                Curso: {entry.curso}<br />
-                Fecha: {entry.fecha}<br />
-                Hora: {entry.hora}<br />
-                Firma: 
-                <br />
+        <h2>Información del Alumno - Autorizaciones Vacías</h2>
+        {alumnoData.vacias && alumnoData.vacias.length > 0 ? (
+          <ul>
+            {alumnoData.vacias.map((entry, index) => (
+              <li key={index}>
+                 {entry.texto_autorizacion}<br />
+                Firma: <br />
                 <img
-                style={styles.signatureImage}
-                src={`${entry.firma}`}
-                alt="Firma del alumno"
-                /><br/>
+                  src={`${entry.firma}`}
+                  alt="Firma del alumno"
+                /><br />
                 Aclaración: {entry.aclaracion}<br />
               </li>
             ))}
           </ul>
         ) : (
-          <p style={styles.noRecords}>No se encontraron registros para el alumno ingresado.</p>
+          <p>No se encontraron registros de autorizaciones vacías para el alumno ingresado.</p>
         )}
       </div>
+
+      <div>
+  <h2>Información del Alumno - Autorizaciones de Salida</h2>
+  {alumnoData.salida && alumnoData.salida.length > 0 ? (
+    <ul>
+      {alumnoData.salida.map((entry, index) => (
+        <li key={index}>
+          Fecha: {entry.fecha}<br />
+          Hora: {entry.hora}<br />
+          Firma: <br />
+          <img
+            src={`${entry.firma}`}
+            alt="Firma del alumno"
+          /><br />
+          {/* Otros detalles de las autorizaciones de salida */}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>No se encontraron registros de autorizaciones de salida para el alumno ingresado.</p>
+  )}
+</div>
     </div>
   );
 }

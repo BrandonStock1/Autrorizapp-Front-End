@@ -22,7 +22,7 @@ app.use('Autrorizapp-Front-End/public/firmas', express.static('firmas'));
 // Configurar la conexión a la base de datos MySQL
 require('dotenv').config()
 const mysql = require('mysql2')
-const connection = mysql.createConnection(process.env.DATABASE_URL='mysql://1gc4z41fucbb6kn6vl46:pscale_pw_V3hhqIUh69wxAmOwB8nUyOwc3pS5CvfKx8Jtv90b995@aws.connect.psdb.cloud/proyecto?ssl={"rejectUnauthorized":true}')
+const connection = mysql.createConnection(process.env.DATABASE_URL='mysql://eb4u1vrdimifb4ttvaxe:pscale_pw_iigwBFMRzNc78vGzJZl4ZQpAvKW8qk56XhFMBoWxgkl@aws.connect.psdb.cloud/proyecto?ssl={"rejectUnauthorized":true}')
 connection.connect(err => {
   if (err) {
     console.error('Error al conectar a la base de datos:', err);
@@ -130,38 +130,6 @@ app.get('/api/alumnos', (req, res) => {
   });
 });
 
-// Ruta para obtener todos los perfiles de asistentes
-app.get('/api/asistentes/:id', (req, res) => {
-  const asistenteId = req.params.id;
-
-  connection.query('SELECT * FROM asistentes WHERE id = ?', [asistenteId], (err, result) => {
-    if (err) {
-      console.error('Error al obtener el perfil de usuario:', err);
-      res.status(500).json({ error: 'Error al obtener el perfil de usuario' });
-    } else {
-      if (result.length === 0) {
-        res.status(404).json({ error: 'Perfil de usuario no encontrado' });
-      } else {
-        res.json(result[0]);
-      }
-    }
-  });
-});
-
-// Actualizar un perfil de usuario por ID
-app.put('/api/asistentes/:id', (req, res) => {
-  const asistenteId = req.params.id;
-  const { nombre, apellido, telefono,cursos } = req.body;
-  connection.query('UPDATE asistentes SET nombre = ?, apellido = ?, telefono = ? , cursos = ? WHERE id = ?',[nombre, apellido, telefono, cursos, asistenteId], (err, result) => {
-    if (err) {
-      console.error('Error al actualizar el perfil de usuario:', err);
-      res.status(500).json({ error: 'Error al actualizar el perfil de usuario' });
-    } else {
-      res.json({ success: true });
-    }
-  });
-});
-
 const alumnoEspecifico = 'Juan Ignacio Cama';
 
 app.get('/api/salidas/alumno-especifico', (req, res) => {
@@ -208,41 +176,90 @@ app.get('/api/autorizaciones', (req, res) => {
     }
   });
 });
+app.put('/actualizarDatos/:id', async (req, res) => {
+  const { alumno, firma, aclaracion } = req.body;
+  const textoId = req.params.id;
 
-const directorioFirmas = path.join(__dirname, '../public/firmas');
-if (!fs.existsSync(directorioFirmas)) {
-  fs.mkdirSync(directorioFirmas);
-}
+  const directorioFirmas = path.join(__dirname, '../public/firmas');
+  if (!fs.existsSync(directorioFirmas)) {
+    fs.mkdirSync(directorioFirmas);
+  }
 
-app.post('/api/guardarAutorizacion', (req, res) => {
-  const { alumno, firma, aclaracion, textoAutorizacion } = req.body;
-
-  const base64Data = firma.replace(/^data:image\/png;base64,/, "");
-  const nombreFirma = `${alumno}-${Date.now()}.png`; // Solo el nombre del archivo
-  const rutaFirma = `${nombreFirma}`; // Ruta relativa de la firma
-
-  fs.writeFile(path.join(directorioFirmas, nombreFirma), base64Data, 'base64', (err) => {
-    if (err) {
-      console.error('Error al guardar la firma como archivo:', err);
-      res.status(500).json({ message: 'Error al guardar la firma como archivo' });
-      return;
-    }
-
-    const insertQuery = `
-      INSERT INTO autorizaciones (nombre_alumno, firma, aclaracion, texto_autorizacion)
-      VALUES (?, ?, ?, ?)
-    `;
-    connection.query(insertQuery, [alumno, rutaFirma, aclaracion, textoAutorizacion], (error, results) => {
-      if (error) {
-        console.error('Error al guardar la autorización en la base de datos:', error);
-        res.status(500).json({ message: 'Error al guardar la autorización' });
+    // Aca se guarda la firma en la carpeta "firmas" y se obtiene el nombre del archivo
+    const base64Data = firma.replace(/^data:image\/png;base64,/, "");
+    const nombreFirma = `${alumno}-${Date.now()}.png`; // Solo el nombre del archivo
+    const rutaFirma = `${nombreFirma}`; // Ruta relativa de la firma
+  
+    fs.writeFile(path.join(directorioFirmas, nombreFirma), base64Data, 'base64', (err) => {
+      if (err) {
+        console.error('Error al guardar la firma como archivo: ' + err);
+        res.status(500).json({ message: 'Error al guardar la firma como archivo' });
         return;
       }
-      res.status(200).json({ message: 'Autorización guardada correctamente' });
+  
+
+    // Guardar los datos en la base de datos
+    const updateQuery = 'UPDATE autorizacion_vacia SET nombre_alumno = ?, firma = ?, aclaracion = ? WHERE id = 7 || 8';
+    const values = [alumno, rutaFirma, aclaracion, textoId]; // Reemplazado directorioFirmas con rutaFirma
+
+    connection.query(updateQuery, values, (error, result) => {
+      if (error) {
+        console.error('Error al actualizar datos en la base de datos:', error);
+        res.status(500).json({ message: 'Error al actualizar datos en la base de datos' });
+        return;
+      }
+
+      res.status(200).json({ message: 'Datos actualizados correctamente en la base de datos' });
     });
   });
 });
 
+
+app.get('/api/autorizaciones/alumno-especifico', (req, res) => {
+  const query = 'SELECT * FROM autorizacion_vacia WHERE nombre_alumno = ?';
+
+  connection.query(query, [alumnoEspecifico], (error, results) => {
+    if (error) {
+      console.error('Error al obtener los datos de la base de datos: ' + error);
+      res.status(500).json({ message: 'Error al obtener los datos de la base de datos' });
+    } else {
+      const alumnoDataWithFirma = results.map((entry) => {
+        entry.firma = `/firmas/${entry.firma}`;
+        return entry;
+      });
+      res.json(alumnoDataWithFirma);
+    }
+  });
+});
+
+// Obtener autorizaciones vacías por alumno
+app.get('/api/autorizaciones-vacias/alumno/:alumno', (req, res) => {
+  const alumno = req.params.alumno;
+  connection.query('SELECT * FROM autorizacion_vacia WHERE nombre_alumno = ?', [alumno], (error, results) => {
+    if (error) {
+      console.error('Error al obtener los datos de la base de datos: ' + error);
+      res.status(500).json({ message: 'Error al obtener los datos de la base de datos' });
+    } else {
+      const alumnoDataWithFirma = results.map((entry) => {
+        entry.firma = `/firmas/${entry.firma}`;
+        return entry;
+      });
+      res.json(alumnoDataWithFirma);
+    }
+  });
+});
+
+// Obtener alumnos disponibles
+app.get('/api/alumnos', (req, res) => {
+  connection.query('SELECT DISTINCT nombre_alumno FROM autorizacion_vacia', (error, results) => {
+    if (error) {
+      console.error('Error al obtener la lista de alumnos: ' + error);
+      res.status(500).json({ message: 'Error al obtener la lista de alumnos' });
+    } else {
+      res.json(results);
+    }
+  });
+});
 
 
 // Iniciar el servidor
