@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import '../scss/layout/_Hoja.scss';
+import { sendEmail } from './firebase'; // Asegúrate de usar la ruta correcta
+
 
 function Hoja() {
   const [alumno, setAlumno] = useState("");
@@ -96,6 +98,9 @@ function Hoja() {
       // Enviar los datos al servidor
       const response = await axios.post('http://localhost:3001/api/salida', data);
       console.log(response.data);
+
+      // Enviar un correo electrónico al usuario después de enviar el formulario
+      await sendEmail()
       // Aquí puedes realizar alguna acción después de guardar los datos, como mostrar un mensaje de éxito.
     } catch (error) {
       console.error('Error al enviar los datos al servidor: ' + error);
@@ -169,4 +174,6 @@ function Hoja() {
 }
 
 export default Hoja;
+
+
 
