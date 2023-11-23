@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword,  } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 
@@ -99,5 +99,25 @@ export const registerUser = (email, password) => {
     .catch((error) => {
       console.error('Error al registrar usuario:', error.message);
       alert('Error al registrar usuario: ' + error.message);
+    });
+};
+
+export const changePassword = (currentPassword, newPassword) => {
+  const user = auth.currentUser;
+
+  // Autentica al usuario nuevamente con su contraseña actual
+  signInWithEmailAndPassword(auth, user.email, currentPassword)
+    .then(() => {
+      // Cambia la contraseña
+      updatePassword(user, newPassword)
+        .then(() => {
+          alert('Contraseña cambiada exitosamente');
+        })
+        .catch((error) => {
+          alert(`Error al cambiar la contraseña: ${error.message}`);
+        });
+    })
+    .catch((error) => {
+      alert(`Error al autenticar al usuario: ${error.message}`);
     });
 };
