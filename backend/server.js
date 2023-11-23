@@ -22,7 +22,7 @@ app.use('Autrorizapp-Front-End/public/firmas', express.static('firmas'));
 // Configurar la conexión a la base de datos MySQL
 require('dotenv').config()
 const mysql = require('mysql2')
-const connection = mysql.createConnection(process.env.DATABASE_URL='mysql://eb4u1vrdimifb4ttvaxe:pscale_pw_iigwBFMRzNc78vGzJZl4ZQpAvKW8qk56XhFMBoWxgkl@aws.connect.psdb.cloud/proyecto?ssl={"rejectUnauthorized":true}')
+const connection = mysql.createConnection(process.env.DATABASE_URL='mysql://yltoeu47h71v8y89e929:pscale_pw_jtiH7uVWFwmqJEplr1v0Yu6Yy4RcWup9Si7AYMZyP4m@aws.connect.psdb.cloud/proyecto?ssl={"rejectUnauthorized":true}')
 connection.connect(err => {
   if (err) {
     console.error('Error al conectar a la base de datos:', err);
@@ -199,7 +199,7 @@ app.put('/actualizarDatos/:id', async (req, res) => {
   
 
     // Guardar los datos en la base de datos
-    const updateQuery = 'UPDATE autorizacion_vacia SET nombre_alumno = ?, firma = ?, aclaracion = ? WHERE id = 7 || 8';
+    const updateQuery = 'UPDATE autorizacion_vacia SET nombre_alumno = ?, firma = ?, aclaracion = ? WHERE id = 9 || 10';
     const values = [alumno, rutaFirma, aclaracion, textoId]; // Reemplazado directorioFirmas con rutaFirma
 
     connection.query(updateQuery, values, (error, result) => {

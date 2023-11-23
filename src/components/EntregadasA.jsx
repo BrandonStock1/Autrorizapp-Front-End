@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../scss/layout/_EntregadasAlumnos.scss';;
+import '../scss/layout/_EntregadasAlumnos.scss';
 
 function App() {
   const [autorizacionesVacias, setAutorizacionesVacias] = useState([]);
@@ -15,7 +15,7 @@ function App() {
         const responseSalida = await axios.get('http://localhost:3001/api/salidas/alumno-especifico');
         setAutorizacionesSalida(responseSalida.data);
       } catch (error) {
-        console.error('Error al obtener autorizaciones: ' + error);
+        console.error('Error al obtener autorizaciones: ', error);
       }
     };
 
@@ -30,7 +30,7 @@ function App() {
         {autorizacionesVacias.length > 0 ? (
           autorizacionesVacias.map((autorizacion) => (
             <li key={autorizacion.id}>
-              <p style={{ border: '1px solid black', padding: '8px', borderRadius: '3px' }}>  {autorizacion.texto_autorizacion}</p>
+              <p>{autorizacion.texto_autorizacion}</p>
               Firma:
               <br />
               <img
