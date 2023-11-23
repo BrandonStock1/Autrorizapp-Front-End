@@ -22,7 +22,7 @@ app.use('Autrorizapp-Front-End/public/firmas', express.static('firmas'));
 // Configurar la conexión a la base de datos MySQL
 require('dotenv').config()
 const mysql = require('mysql2')
-const connection = mysql.createConnection(process.env.DATABASE_URL='mysql://yltoeu47h71v8y89e929:pscale_pw_jtiH7uVWFwmqJEplr1v0Yu6Yy4RcWup9Si7AYMZyP4m@aws.connect.psdb.cloud/proyecto?ssl={"rejectUnauthorized":true}')
+const connection = mysql.createConnection(process.env.DATABASE_URL='mysql://r60pnkmfpz3k5ddkbbuc:pscale_pw_F42Nc8lf5QwnDAageWnPaCgtE7GW9WRMyx8NfainVb2@aws.connect.psdb.cloud/proyecto?ssl={"rejectUnauthorized":true}')
 connection.connect(err => {
   if (err) {
     console.error('Error al conectar a la base de datos:', err);
